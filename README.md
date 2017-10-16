@@ -19,6 +19,9 @@ The project depends on:
 * mbedcrypto from [mbedtls](https://tls.mbed.org)
 * (for the tests only) [Boost.Test](http://www.boost.org/doc/libs/1_65_1/libs/test/doc/html/index.html)
 
+The include and library paths for the above can be seen in the [SConstruct.py](SConstruct.py) in the
+`INCLUDES` and `LIBPATH` variables. Go ahead and change them if necessary.
+
 ## Compiling
 The project compiles with [scons](http://scons.org) in the root directory. Just run:
 
@@ -32,7 +35,7 @@ simple example program (`main`).
 
 The reason that this is compiled as a static library and that it uses mbedtls instead of
 some other common crypto is because the project had to run on a ESP32
-device. 
+device.
 
 # API
 Here is a simple example of generating a key and a secret and then using the key to
@@ -63,7 +66,7 @@ auto Cw = createSecret(pub, encryptionAttributes, secret); // Decryption paramet
 // Recover secret
 element_s recovered;
 recoverSecret(key, Cw, attributes, recovered);
-element_cmp(&secret, recovered); // should be ==0
+element_cmp(&secret, &recovered); // should be ==0
 
 for(auto& attrCiPair: Cw) { //clean up
    element_clear(&attrCiPair.second);
