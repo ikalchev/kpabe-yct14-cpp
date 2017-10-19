@@ -16,11 +16,9 @@ int main() {
 
    // Create an access policy and derive a key for it.
    // (1 OR 2) AND (3 OR 4)
-   Node root(Node::Type::AND);
-   Node orNodeLeft(Node::Type::OR, {Node(1), Node(2)});
-   Node orNodeRight(Node::Type::OR, {Node(3), Node(4)});
-   root.addChild(orNodeLeft);
-   root.addChild(orNodeRight);
+   Node orNodeLeft(Node::Type::OR, {1, 2});
+   Node orNodeRight(Node::Type::OR, {3, 4});
+   Node root(Node::Type::AND, {orNodeLeft, orNodeRight});
 
    auto key = keyGeneration(priv, root);
 

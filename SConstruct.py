@@ -7,7 +7,6 @@ def getNativeEnv():
       "-I.",
       "-I/usr/local/include",
       "-I/usr/local/include/pbc",
-      "-I/usr/local/include/boost",
    ]
    LIBPATH = [
      "#",
@@ -29,12 +28,12 @@ def kpabeLib(env):
    return env.StaticLibrary("kpabe", ["kpabe.cpp"])
 
 def registerTests(env):
-
-   BOOST_UNIT_TEST_LIB = "boost_unit_test_framework"
+   BOOST_H = "/usr/local/include/boost"
+   BOOST_TEST_LIB = "boost_unit_test_framework"
 
    files = ["kpabe_test.cpp"]
-   testEnv = env.Clone(CCFLAGS = "-g",
-                       LIBS = env["LIBS"] + ["kpabe"] + [BOOST_UNIT_TEST_LIB])
+   testEnv = env.Clone()
+   testEnv["LIBS"].extend(["kpabe", BOOST_TEST_LIB])
    testCases = [];
    for f in files:
       targetFile = os.path.join("#",
@@ -46,7 +45,6 @@ def registerTests(env):
 def registerMain(env):
   mainEnv = env.Clone()
   mainEnv["LIBS"].append("kpabe")
-  mainEnv["LIBS"].append("mbedcrypto")
   return mainEnv.Program("main", "#main.cpp")
 
 def collectNativeTargets(env):
